@@ -3,10 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col order-1">
-            First in DOM, no order applied
+        @if ($settings->col_comment)
+        <div class="col order-{{$settings->col_comment}}">
+            Ez mindig a komment rész
         </div>
-        <div class="col order-2">
+        @endif
+        <div class="col order-{{$settings->col_post}}">
             <div class="card">
                 <div class="card-header">
                     {{ __('Dashboard') }}
@@ -22,9 +24,14 @@
                 </div>
             </div>
         </div>
-        <div class="col order-3">
-            Third in DOM, with an order of 1
-        </div>
+        
+        
+        @if ($settings->col_related)
+        <div class="col order-{{$settings->col_related}}">
+            Ez mindig a related rész
+        </div>    
+        @endif
+        
     </div>
 </div>
 @endsection

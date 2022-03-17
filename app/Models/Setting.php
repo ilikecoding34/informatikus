@@ -9,6 +9,6 @@ class Setting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['col_count', 'col_first', 'user_id', 'col_second', 'col_third'];
+    protected $fillable = ['user_id', 'col_count', 'col_comment',  'col_post', 'col_related'];
 
 }

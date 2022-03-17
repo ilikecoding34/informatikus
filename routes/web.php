@@ -39,4 +39,4 @@ Route::get('/settings', Pagesettings::class)->name('settings');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

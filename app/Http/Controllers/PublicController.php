@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Setting;
 
 class PublicController extends Controller
 {
     public function main(){
+        $settings = Setting::find(1);
         $posts = Post::with('user')->get();
-        return view('main', compact('posts'));
+        return view('main2', compact('posts', 'settings'));
     }
 
     public function main_post($id){

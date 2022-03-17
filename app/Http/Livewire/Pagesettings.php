@@ -143,6 +143,53 @@ class Pagesettings extends Component
         }
     }
     public function savesettings(){
+        $col_post = 1; 
+        $col_related = null; 
+        $col_comment = null; 
+        if($this->column_count_id == 1){
+            $col_post = 1;
+        }
+
+        if($this->column_count_id == 2){
+            if($this->col1 == 1){
+                $col_related = $this->col1;
+            }
+            if($this->col1 == 2){
+                $col_post = $this->col1;
+            }
+            if($this->col1 == 3){
+                $col_comment = 1;
+            }
+
+            if($this->col2 == 1){
+                $col_related = 3;
+            }
+            if($this->col2 == 2){
+                $col_post = $this->col2;
+            }
+            if($this->col2 == 3){
+                $col_comment = $this->col2;
+            }
+        }
+
+        if($this->column_count_id == 3){
+
+            if($this->col1 == 1){
+                $col_related = $this->col1;
+            }
+            if($this->col1 == 3){
+                $col_comment = $this->col1;
+            }
+
+            $col_post = 2;
+
+            if($this->col3 == 1){
+                $col_related = $this->col3;
+            }
+            if($this->col3 == 3){
+                $col_comment = $this->col3;
+            }
+        }
 
         Setting::updateOrCreate(
             [
@@ -150,9 +197,9 @@ class Pagesettings extends Component
             ],
             [
                 'col_count' =>  $this->column_count_id,
-                'col_first' => $this->col1,
-                'col_second' => $this->col2,
-                'col_third' => $this->col3
+                'col_post' => $col_post,
+                'col_comment' => $col_comment,
+                'col_related' => $col_related
             ]);
 
     }

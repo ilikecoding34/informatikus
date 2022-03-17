@@ -17,9 +17,9 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->integer('col_count');
-            $table->integer('col_first');
-            $table->integer('col_second')->nullable();
-            $table->integer('col_third')->nullable();
+            $table->integer('col_comment')->nullable();
+            $table->integer('col_post');
+            $table->integer('col_related')->nullable();
             $table->timestamps();
         });
     }
