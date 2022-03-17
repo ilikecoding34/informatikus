@@ -9,9 +9,6 @@ class Setting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['column_number', 'order_type', 'user_id', 'blog_visual'];
+    protected $fillable = ['col_count', 'col_first', 'user_id', 'col_second', 'col_third'];
 
-    protected $casts = [
-        'order_type' => 'array',
-    ];
 }

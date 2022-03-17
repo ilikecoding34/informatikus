@@ -16,9 +16,10 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('blog_visual');
-            $table->integer('column_number');
-            $table->integer('order_type');
+            $table->integer('col_count');
+            $table->integer('col_first');
+            $table->integer('col_second')->nullable();
+            $table->integer('col_third')->nullable();
             $table->timestamps();
         });
     }

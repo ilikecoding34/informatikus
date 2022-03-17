@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Setting;
+use Auth;
 
 class Pagesettings extends Component
 {
@@ -52,18 +54,20 @@ class Pagesettings extends Component
         return view('livewire.pagesettings')->extends('layouts.app');
     }
 
-    public function changeType($iter, $value)
+    public function changeType($colid, $value)
     {   
         if($this->column_count_id == 1){
             $this->col1 = 1; 
         }
         if($this->column_count_id == 2){
-                switch($iter){
+                switch($colid){
                     case 0:
                         break;
                     case 1:
                         if($this->col2 != $value){
                             $this->col1 = $value;
+                        }else{
+                            $this->col2 = 1;
                         }
                         if($value != 2){
                             $this->col2 = 2;
@@ -72,6 +76,8 @@ class Pagesettings extends Component
                     case 2:
                         if($this->col1 != $value){
                             $this->col2 = $value;
+                        }else{
+                            $this->col1 = 1;
                         }
                         if($value != 2){
                             $this->col1 = 2;
@@ -81,7 +87,7 @@ class Pagesettings extends Component
         }
         if($this->column_count_id == 3){
             $this->col2 = 2;
-                switch($iter){
+                switch($colid){
                     case 0:
                         break;
                     case 1:
@@ -110,24 +116,45 @@ class Pagesettings extends Component
     public function changeCount($value)
     {
         $this->column_count_id = $value;
-        $this->col1 = ''; 
-        $this->col2 = ''; 
-        $this->col3 = ''; 
+        $this->col1 = null; 
+        $this->col2 = null; 
+        $this->col3 = null; 
         switch($value){
         case 0:
             $this->selectables = $this->onecolumn;
-            $this->col1 = 1; 
+            $this->col1 = 1;
+            $this->column_count_id = 1;
             break;
         case 1:
             $this->selectables = $this->onecolumn;
+            $this->col1 = 1;
             break;
         case 2:
             $this->selectables = $this->twocolumns;
+            $this->col1 = 1;
+            $this->col2 = 2;
             break;
         case 3:
             $this->selectables = $this->threecolumns;
+            $this->col1 = 1;
             $this->col2 = 2;
+            $this->col3 = 3;
             break;
         }
     }
+    public function savesettings(){
+
+        Setting::updateOrCreate(
+            [
+                'user_id' => Auth::user()->id
+            ],
+            [
+                'col_count' =>  $this->column_count_id,
+                'col_first' => $this->col1,
+                'col_second' => $this->col2,
+                'col_third' => $this->col3
+            ]);
+
+    }
+   
 }
