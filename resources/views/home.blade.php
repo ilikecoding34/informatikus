@@ -16,14 +16,17 @@
                     {{ __('You are logged in!') }}
                 </div>
             </div>
+            @foreach ($posts as $item)
             <div class="card">
-                <div class="card-header">{{ __('Posts') }}</div>
+                <div class="card-header">{{$item->title}}</div>
                 <div class="card-body">
                     <a href="{{route('posts.index')}}" class="btn btn-primary btn-lg"  role="button">
-                        Primary link
+                        
                     </a>
                 </div>
             </div>
+            @endforeach
+            
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
                 <div class="card-body">
