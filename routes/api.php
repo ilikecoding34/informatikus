@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\APIController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 
@@ -15,17 +16,15 @@ use App\Models\Post;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group(['middleware' => 'auth:sanctum'], function(){
+    //All secure URL's
+    Route::get("users",[APIController::class,'users']);
+    Route::get('posts', [APIController::class, 'posts']);
+    Route::get("post/{id}",[APIController::class,'getpost']);
+    Route::get("getpost/{id}",[APIController::class,'getpost']);
+    Route::post('newpost', [APIController::class, 'newpost']);
+    Route::get("users",[APIController::class,'users']);
 
-
-Route::get('posts', function() {
-    // If the Content-Type and Accept headers are set to 'application/json',
-    // this will return a JSON structure. This will be cleaned up later.
-    return Post::with('user')->get();
 });
-
-Route::get('posts/{id}', function($id) {
-    return Post::with(['user:id,name','comments.user:id,name'])->find($id);
-});
+    
+Route::post("login",[APIController::class,'index']);
