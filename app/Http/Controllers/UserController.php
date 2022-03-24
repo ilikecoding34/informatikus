@@ -66,7 +66,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::find($id)->with('role');
         $roles = Role::all();
         return view('users.edit', compact('user', 'roles'));
     }

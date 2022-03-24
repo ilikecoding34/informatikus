@@ -19,7 +19,7 @@
                 </div>
                 <label class="col-4 control-label">Jogosultság</label>
                 <select disabled name='category' class="form-control mb-4" >
-                    <option>{{$user->role_id}}</option>
+                    <option>{{$user->role->name}}</option>
                 </select>
                 <a class="btn btn-secondary" href="{{route('users.edit', $user->id)}}" role="button">Szerkeszt</a>
             </form>
