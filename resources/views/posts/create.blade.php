@@ -20,30 +20,26 @@
                     <div class="form-text">Ez a bejegyzés címe lesz</div>
                 </div>
                 <div class="mb-3">
-                    <label for="floatingTextarea" class="form-label">Szoveg</label>
-                    <textarea class="form-control" placeholder="Leave a comment here" name="content"></textarea>
+                    <label for="floatingTextarea" class="form-label">Szöveg</label>
+                    <textarea class="form-control" placeholder="Bejegyzés tartalma" name="content"></textarea>
                 </div>
-                <div class="col-xs-2">
-                    <label class="col-xs-3 control-label">Kategória</label>
-                    <select name='category' class="form-control" style="width:auto;">
-                        <option value="1">Short</option>
-                        <option value="2">Medium lenght
-                        </option>
-                        <option value="3">Much much much longer text not fitting when resizing
-                        </option>
-                    </select>
-                </div>
-                <div class="col-xs-2">
-                    <label class="col-xs-3 control-label">Tags</label>
-                    <select name='tags[]' multiple class="form-control" style="width:auto;">
-                        @foreach ($tags as $item)
-                        <option value="{{$item->id}}">{{$item->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" name="active">
-                <label class="form-check-label" for="exampleCheck1">Aktív</label>
+                <div class="row justify-content-md-center">
+                    <div class="col-4">
+                        <label class="col-4 control-label">Kategória</label>
+                        <select name='category' class="form-control" >
+                            @foreach($categories as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label class="col-4 control-label">Tags</label>
+                        <select name='tags[]' multiple class="form-control">
+                            @foreach ($tags as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-success">Mentés</button>
             </form>

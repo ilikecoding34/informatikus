@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
 use App\Http\Livewire\Pagesettings;
 
 
@@ -22,10 +23,7 @@ use App\Http\Livewire\Pagesettings;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [App\Http\Controllers\PublicController::class, 'main'])->name('main');
 Route::get('/main', [App\Http\Controllers\PublicController::class, 'main'])->name('main');
 Route::get('/main/{id}', [App\Http\Controllers\PublicController::class, 'main_post'])->name('main_post');
 
@@ -33,6 +31,7 @@ Route::resource('posts', PostController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('tags', TagController::class);
 Route::resource('roles', RoleController::class);
+Route::resource('users', UserController::class);
 Route::resource('comments', CommentController::class);
 
 Route::get('/settings', Pagesettings::class)->name('settings');

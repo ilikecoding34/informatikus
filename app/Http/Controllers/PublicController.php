@@ -16,8 +16,7 @@ class PublicController extends Controller
 
     public function main_post($id){
         $settings = Setting::find(1);
-        $comments = Comment::where('post_id', 1)->get();
-        $post = Post::with(['user:id,name','comments.user:id,name'])->find($id);
-        return view('main2', compact('post', 'comments', 'settings'));
+        $post = Post::where('id', $id)->with(['user','comments'])->first();
+        return view('main2', compact('post', 'settings'));
     }
 }

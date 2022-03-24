@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Setting;
+use App\Models\Category;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -36,7 +37,8 @@ class PostController extends Controller
     public function create()
     {
         $tags = Tag::all();
-        return view('posts.create', compact('tags'));
+        $categories = Category::all();
+        return view('posts.create', compact('tags', 'categories'));
     }
 
     /**

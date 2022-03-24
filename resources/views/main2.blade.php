@@ -5,13 +5,15 @@
     <div class="row">
         @if ($settings->col_comment)
         <div class="col-3 order-{{$settings->col_comment}}">
-            @foreach ($comments as $item)
-            <div class="card mb-4">
-                <div class="card-body">
-                    {{$item->body}}
+            @if ($post->comments->isNotEmpty())
+                @foreach ($post->comments as $item)
+                <div class="card mb-4">
+                    <div class="card-body">
+                        {{$item->body}}
+                    </div>
                 </div>
-            </div>
-            @endforeach
+                @endforeach
+            @endif
         </div>
         @endif
         <div class="@if($settings->col_count == 1)

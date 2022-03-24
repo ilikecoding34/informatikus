@@ -62,27 +62,32 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
+                                    @if (Auth::user()->role_id == 1)
                                     <a class="dropdown-item" href="{{ route('posts.index') }}">
-                                     {{ __('Bejegyzések') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('categories.index') }}">
+                                        {{ __('Bejegyzések') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('categories.index') }}">
                                         {{ __('Kategoriák') }}
                                        </a>
                                        <a class="dropdown-item" href="{{ route('tags.index') }}">
                                         {{ __('Tagek') }}
                                        </a>
+                                       <a class="dropdown-item" href="{{ route('users.index') }}">
+                                        {{ __('Felhasználók') }}
+                                       </a>
                                        <a class="dropdown-item" href="{{ route('roles.index') }}">
                                         {{ __('Jogosultságok') }}
-                                       </a>
+                                    </a>
+                                    @endif
+                                        
                                        <a class="dropdown-item" href="{{ route('settings') }}">
                                         {{ __('Beállítások') }}
                                        </a>
                                        <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                        {{ __('Kijelentkezés') }}
+                                        </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

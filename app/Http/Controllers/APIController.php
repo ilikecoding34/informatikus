@@ -32,8 +32,7 @@ class APIController extends Controller
     function users(Request $request)
     {
         $user= User::find(1);
-
-            $response = $user;
+        $response = $user;
 
         return response($response, 200);
     }
@@ -44,7 +43,7 @@ class APIController extends Controller
     }
 
     public function getpost($id){
-        $post = Post::find($id)->with('comments')->get();
+        $post = Post::where('id', $id)->with('comments')->get();
         return response($post, 200);
     }
 
