@@ -59,4 +59,16 @@ class APIController extends Controller
         return response($post, 201);
     }
 
+    public function newcomment(Request $request){
+        $comment = new Comment;
+        $comment->user_id = $request->userid;
+        $comment->body = $request->content;
+        $comment->post_id = $request->postid;
+        $comment->save();
+
+        $post = Post::find($request->postid);
+
+        return response()->json($posts, 201);
+    }
+
 }

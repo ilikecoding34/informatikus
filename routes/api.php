@@ -19,11 +19,12 @@ use App\Models\Post;
 Route::group(['middleware' => 'auth:sanctum'], function(){
     //All secure URL's
     Route::get("users",[APIController::class,'users']);
-    Route::get('posts', [APIController::class, 'posts']);
-    Route::get("post/{id}",[APIController::class,'getpost']);
     Route::post('newpost', [APIController::class, 'newpost']);
+    Route::post('newcomment', [APIController::class, 'newcomment']);
     Route::get("users",[APIController::class,'users']);
 
 });
 
+Route::get('posts', [APIController::class, 'posts']);
+Route::get("post/{id}",[APIController::class,'getpost']);
 Route::post("login",[APIController::class,'index']);
