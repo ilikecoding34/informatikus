@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Hash;
 
 class APIController extends Controller
 {
@@ -49,6 +50,10 @@ class APIController extends Controller
 
     public function newpost(Request $request){
         $post = new Post;
+        $post->user_id = $request->userid;
+        $post->title = $request->title;
+        $post->body = $request->content;
+        $post->category_id = $request->category;
         $post->save();
 
         return response($post, 201);

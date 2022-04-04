@@ -8,7 +8,7 @@
                 @foreach ($post->comments as $item)
                 <div class="card mb-3">
                     @if (Auth::user())
-                    <a href="{{route('comments.edit', $post->id)}}" class="list-group-item list-group-item-action">
+                    <a href="{{route('comments.edit', $item->id)}}" class="list-group-item list-group-item-action">
 
                     @endif
                     <div class="card-body">
