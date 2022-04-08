@@ -20,7 +20,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     //All secure URL's
     Route::get("users",[APIController::class,'users']);
     Route::post('newpost', [APIController::class, 'newpost']);
+    Route::post('modifypost', [APIController::class, 'modifypost']);
     Route::post('newcomment', [APIController::class, 'newcomment']);
+    Route::post('modifycomment', [APIController::class, 'modifycomment']);
+    Route::post('deletecomment', [APIController::class, 'deletecomment']);
     Route::get("users",[APIController::class,'users']);
 
 });

@@ -44,7 +44,7 @@ class APIController extends Controller
     }
 
     public function getpost($id){
-        $post = Post::where('id', $id)->with('comments')->get();
+        $post = Post::where('id', $id)->with('comments')->first();
         return response($post, 200);
     }
 
@@ -52,6 +52,18 @@ class APIController extends Controller
         $post = new Post;
         $post->user_id = $request->userid;
         $post->title = $request->title;
+        $post->link = $request->link;
+        $post->body = $request->content;
+        $post->category_id = $request->category;
+        $post->save();
+
+        return response($post, 201);
+    }
+
+    public function modifypost(Request $request){
+        $post = Post::find($request->id);
+        $post->title = $request->title;
+        $post->link = $request->link;
         $post->body = $request->content;
         $post->category_id = $request->category;
         $post->save();
@@ -68,7 +80,26 @@ class APIController extends Controller
 
         $post = Post::find($request->postid);
 
-        return response()->json($posts, 201);
+        return response($post, 200);
+    }
+
+    public function modifycomment(Request $request){
+        $comment = Comment::find($request->id);
+        $comment->body = $request->content;
+        $comment->save();
+
+        $post = Post::find($request->postid);
+
+        return response($post, 200);
+    }
+
+    public function deletecomment(Request $request){
+        $comment = Comment::find($request->commentid);
+        $comment->delete();
+
+        $post = Post::find($request->postid);
+
+        return response($post, 200);
     }
 
 }
