@@ -15,7 +15,7 @@
             <form class="form-group" method="POST" action="{{route('roles.store')}}">
                 @csrf
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Tag</label>
+                    <label for="exampleInputEmail1" class="form-label">Role elnevezés</label>
                     <input type="text" class="form-control" name="name" id="name" value="">
                 </div>
                 <button type="submit" class="btn btn-success">Mentés</button>

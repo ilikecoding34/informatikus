@@ -24,24 +24,33 @@
             col-6
             @endif
              order-{{$settings->col_post}}">
-             <div class="card mb-4">
+             <div class="card">
                 <div class="card-header">
-                    {{$post->title}}
+                    <h5 class="card-title">{{$post->title}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                 </div>
                 <div class="card-body">
-                    {{$post->body}}
+                    @if ($post->tags->isNotEmpty())
+                        @foreach ($post->tags as $item)
+                        <span class="badge badge-primary">{{$item->name}}</span>
+                        @endforeach
+                    @endif
+                <div class="my-2">
+                    <a href="{{$post->link}}" class="card-link">Link</a>
                 </div>
-            </div>
-            
+                <p class="card-text">{{$post->body}}</p>
+                </div>
+              </div>
+
         </div>
-        
-        
+
+
         @if ($settings->col_related)
         <div class="col-3 order-{{$settings->col_related}}">
             Ez mindig a related rész
-        </div>    
+        </div>
         @endif
-        
+
     </div>
 </div>
 @endsection

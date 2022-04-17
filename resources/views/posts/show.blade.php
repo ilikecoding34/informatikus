@@ -23,18 +23,11 @@
                     <textarea class="form-control" placeholder="Leave a comment here" name="content">{{$post->body}}</textarea>
                 </div>
                 <div class="col-xs-2">
-                    <label class="col-xs-3 control-label">Kategória</label>
-                    <select name='category' class="form-control" style="width:auto;">
-                        <option value="1">Short</option>
-                        <option value="2">Medium lenght
-                        </option>
-                        <option value="3">Much much much longer text not fitting when resizing
-                        </option>
-                    </select>
-                </div>
-                <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" name="active">
-                <label class="form-check-label" for="exampleCheck1">Aktív</label>
+                    @if ($post->tags->isNotEmpty())
+                        @foreach ($post->tags as $item)
+                            <span class="badge badge-primary">{{$item->name}}</span>
+                        @endforeach
+                    @endif
                 </div>
                 <a class="btn btn-secondary" href="{{route('posts.edit', $post->id)}}" role="button">Szerkeszt</a>
 

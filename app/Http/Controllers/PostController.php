@@ -82,7 +82,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $post = Post::find($post->id);
-        return view('posts.edit', compact('post'));
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('posts.edit', compact('post', 'tags', 'categories'));
     }
 
     /**
@@ -100,6 +102,8 @@ class PostController extends Controller
         $post->body = $request->content;
         $post->category_id = $request->category;
         $post->save();
+
+        $post->tags()->sync($request->tags);
 
         return redirect(route('posts.index'));
     }

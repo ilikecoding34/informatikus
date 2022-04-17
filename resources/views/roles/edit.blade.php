@@ -16,7 +16,7 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Tag</label>
+                    <label for="exampleInputEmail1" class="form-label">Role elnevezés</label>
                     <input type="text" class="form-control" name="name" id="name" value="{{$role->name}}">
                 </div>
 
