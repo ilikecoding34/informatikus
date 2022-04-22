@@ -13,7 +13,7 @@ class APIController extends Controller
     function index(Request $request)
     {
         $user= User::where('email', $request->email)->first();
-        // print_r($data);
+
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([
                     'message' => ['These credentials do not match our records.']
@@ -26,25 +26,17 @@ class APIController extends Controller
                 'token' => $token,
                 'user_id' => $user->id
             ];
-      //          return $token;
+
              return response($response, 200);
     }
 
-    function users(Request $request)
-    {
-        $user= User::find(1);
-        $response = $user;
-
-        return response($response, 200);
-    }
-
     public function posts(){
-        $posts = Post::all();
+        $posts = Post::with('user')->get();
         return response()->json($posts, 200);
     }
 
     public function getpost($id){
-        $post = Post::where('id', $id)->with('comments')->first();
+        $post = Post::where('id', $id)->with(['user','comments'])->first();
         return response($post, 200);
     }
 

@@ -42,7 +42,7 @@ class CommentController extends Controller
         $comment->body = $request->body;
         $comment->save();
 
-        return redirect(route('posts.show', $request->post));
+        return redirect(route('main_post', $request->post));
     }
 
     /**
@@ -64,13 +64,11 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-            if (Auth::user() && (Auth::user()->id == $comment->user_id)){
-                return view('comments.edit', compact('comment'));
-            }else{
-                return redirect(route('posts.index'));
-            }
-
-
+        if (Auth::user() && (Auth::user()->id == $comment->user_id)){
+            return view('comments.edit', compact('comment'));
+        }else{
+            return redirect(route('posts.index'));
+        }
     }
 
     /**
@@ -96,6 +94,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+
+        return redirect(route('main_post', $comment->post_id));
     }
 }
