@@ -10,6 +10,7 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Pagesettings;
+use App\Http\Controllers\SendEmailController;
 
 
 /*
@@ -35,6 +36,7 @@ Route::resource('users', UserController::class);
 Route::resource('comments', CommentController::class);
 
 Route::get('/settings', Pagesettings::class)->name('settings');
+Route::get('/send-email', [SendEmailController::class, 'index']);
 
 Auth::routes();
 

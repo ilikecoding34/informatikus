@@ -30,6 +30,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                <a href="https://www.buymeacoffee.com/buymesomebeer" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Beer" style="height: 60px !important;width: 217px !important;" ></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -79,7 +80,7 @@
                                         {{ __('Jogosultságok') }}
                                     </a>
                                     @endif
-                                        
+
                                        <a class="dropdown-item" href="{{ route('settings') }}">
                                         {{ __('Beállítások') }}
                                        </a>
