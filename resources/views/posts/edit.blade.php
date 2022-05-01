@@ -21,6 +21,11 @@
                     <div class="form-text">Ez a bejegyzés címe lesz</div>
                 </div>
                 <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Link</label>
+                    <input type="text" class="form-control" name="link" id="link" value="{{$post->link}}">
+                    <div class="form-text">Ide beszúrható egy link</div>
+                </div>
+                <div class="mb-3">
                     <label for="floatingTextarea" class="form-label">Szoveg</label>
                     <textarea class="form-control" placeholder="Leave a comment here" name="content">{{$post->body}}</textarea>
                 </div>

@@ -10,7 +10,31 @@ use Illuminate\Support\Facades\Hash;
 
 class APIController extends Controller
 {
-    function index(Request $request)
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+         ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()
+            ->json(['data' => $user,'access_token' => $token, 'token_type' => 'Bearer', ]);
+    }
+
+    function login(Request $request)
     {
         $user= User::where('email', $request->email)->first();
 

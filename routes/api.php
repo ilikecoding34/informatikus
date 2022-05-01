@@ -30,4 +30,5 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
 Route::get('posts', [APIController::class, 'posts']);
 Route::get("post/{id}",[APIController::class,'getpost']);
-Route::post("login",[APIController::class,'index']);
+Route::post("login",[APIController::class,'login']);
+Route::post("register",[APIController::class,'register']);

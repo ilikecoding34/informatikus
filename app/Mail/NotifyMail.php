@@ -30,6 +30,7 @@ class NotifyMail extends Mailable
      */
     public function build()
     {
+        $this->subject('Új regisztráció');
         return $this->view('emails.demoMail');
     }
 }

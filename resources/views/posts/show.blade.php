@@ -15,12 +15,17 @@
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Cím</label>
-                    <input type="text" class="form-control" name="title" id="title" value="{{$post->title}}">
+                    <input type="text" class="form-control" disabled name="title" id="title" value="{{$post->title}}">
                     <div class="form-text">Ez a bejegyzés címe lesz</div>
                 </div>
                 <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Link</label>
+                    <input type="text" class="form-control" disabled name="title" id="title" value="{{$post->link}}">
+
+                </div>
+                <div class="mb-3">
                     <label for="floatingTextarea" class="form-label">Szoveg</label>
-                    <textarea class="form-control" placeholder="Leave a comment here" name="content">{{$post->body}}</textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" disabled name="content">{{$post->body}}</textarea>
                 </div>
                 <div class="col-xs-2">
                     @if ($post->tags->isNotEmpty())

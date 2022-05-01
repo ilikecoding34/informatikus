@@ -20,6 +20,11 @@
                     <div class="form-text">Ez a bejegyzés címe lesz</div>
                 </div>
                 <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Link</label>
+                    <input type="text" class="form-control" name="link" id="link" value="">
+                    <div class="form-text">Ide beszúrható egy link</div>
+                </div>
+                <div class="mb-3">
                     <label for="floatingTextarea" class="form-label">Szöveg</label>
                     <textarea class="form-control" placeholder="Bejegyzés tartalma" name="content"></textarea>
                 </div>
