@@ -15,7 +15,13 @@
                         <div class="row">
                             <div class="col">
                                 <p class="card-text text-left">
-                                    <small class="text-muted">Szerző: {{$item->user->name}}</small>
+                                    <small class="text-muted">Szerző:
+                                        @if ($item->user != null)
+                                        {{$item->user->name}}
+                                        @else
+                                        Törölt felhasználó
+                                        @endif
+                                        </small>
                                 </p>
                             </div>
                             <div class="col">

@@ -13,11 +13,11 @@ class PublicController extends Controller
     public function main(){
         $user = auth()->user();
         if ($user == null){
-            $posts = Post::with('user')->get();
+            $posts = Post::with('user')->orderBy('id', 'DESC')->get();
             return view('main', compact('posts'));
         }else{
             if($user->email_verified_at != null){
-                $posts = Post::with('user')->get();
+                $posts = Post::with('user')->orderBy('id', 'DESC')->get();
                 return view('main', compact('posts'));
             }else{
                 Auth::logout();

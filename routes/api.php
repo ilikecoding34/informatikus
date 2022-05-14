@@ -24,11 +24,15 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('newcomment', [APIController::class, 'newcomment']);
     Route::post('modifycomment', [APIController::class, 'modifycomment']);
     Route::post('deletecomment', [APIController::class, 'deletecomment']);
-    Route::get("users",[APIController::class,'users']);
+  //  Route::get("users",[APIController::class,'users']);
 
 });
+
+//Auth::routes(['verify' => true]);
 
 Route::get('posts', [APIController::class, 'posts']);
 Route::get("post/{id}",[APIController::class,'getpost']);
 Route::post("login",[APIController::class,'login']);
 Route::post("register",[APIController::class,'register']);
+Route::get("verify/{id}/{code}",[APIController::class,'verify']);
+Route::post("lateverify",[APIController::class,'lateverify']);

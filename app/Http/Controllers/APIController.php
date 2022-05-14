@@ -7,6 +7,11 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Mail;
+use Carbon\Carbon;
+use App\Mail\NotifyMail;
+use App\Mail\VerifyMail;
 
 class APIController extends Controller
 {
@@ -21,17 +26,22 @@ class APIController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors());
         }
+        $randnumber = random_int(1000, 9999);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'secret_code' => $randnumber
          ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('my-app-token')->plainTextToken;
+
+        Mail::to('fejdav@gmail.com')->send(new NotifyMail($user));
+        Mail::to($request->email)->send(new VerifyMail($randnumber));
 
         return response()
-            ->json(['data' => $user,'access_token' => $token, 'token_type' => 'Bearer', ]);
+            ->json(['user_id' => $user->id,'access_token' => $token, 'token_type' => 'Bearer', ]);
     }
 
     function login(Request $request)
@@ -54,8 +64,30 @@ class APIController extends Controller
              return response($response, 200);
     }
 
+    public function verify($id, $code){
+        $user = User::find($id);
+        if($user->secret_code == $code){
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+            return response()->json('success', 200);
+        }else{
+            return response()->json('failed', 200);
+        }
+    }
+
+    public function lateverify(Request $request){
+        $user = User::where('email', $request->email)->first();
+        if($user->secret_code == $request->code){
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+            return response()->json('success', 200);
+        }else{
+            return response()->json('failed', 200);
+        }
+    }
+
     public function posts(){
-        $posts = Post::with('user')->get();
+        $posts = Post::with('user')->orderBy('id', 'DESC')->get();
         return response()->json($posts, 200);
     }
 
