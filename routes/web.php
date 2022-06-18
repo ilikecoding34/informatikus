@@ -24,9 +24,10 @@ use App\Http\Controllers\SendEmailController;
 |
 */
 
-Route::get('/', [App\Http\Controllers\PublicController::class, 'main'])->name('main');
-Route::get('/main', [App\Http\Controllers\PublicController::class, 'main'])->name('main');
-Route::get('/main/{id}', [App\Http\Controllers\PublicController::class, 'main_post'])->name('main_post');
+Route::get('/', [PublicController::class, 'main'])->name('main');
+Route::get('/main', [PublicController::class, 'main'])->name('main');
+Route::get('/main/{id}', [PublicController::class, 'main_post'])->name('main_post');
+Route::get('/download-file/{id}', [PublicController::class, 'fileDownload'])->name('fileDownload');
 
 Auth::routes(['verify' => true]);
 

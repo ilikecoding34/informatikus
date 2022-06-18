@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Category;
+use App\Models\Tag;
+use App\Models\Document;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mail;
@@ -91,12 +94,19 @@ class APIController extends Controller
         return response()->json($posts, 200);
     }
 
+    public function postswithtags(){
+        $posts = Post::with('user', 'tags')->orderBy('id', 'DESC')->get();
+        $tag = Tag::all();
+        return response()->json([$posts, $tag], 200);
+    }
+
     public function getpost($id){
-        $post = Post::where('id', $id)->with(['user','comments'])->first();
+        $post = Post::where('id', $id)->with(['user','comments', 'tags', 'file'])->first();
         return response($post, 200);
     }
 
     public function newpost(Request $request){
+
         $post = new Post;
         $post->user_id = $request->userid;
         $post->title = $request->title;
@@ -105,7 +115,31 @@ class APIController extends Controller
         $post->category_id = $request->category;
         $post->save();
 
+        $request->validate([
+            'file' => 'required|mimes:csv,txt,xlx,xls,pdf,jpeg,jpg,png,gif|required|max:10000'
+            ]);
+
+        $fileModel = new Document;
+
+        if($request->file()) {
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads/'.$post->id.'/', $fileName, 'public');
+            $fileModel->userid = 1;
+            $fileModel->postid = $post->id;
+            $fileModel->name = time().'_'.$request->file->getClientOriginalName();
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->save();
+        }
+
+        $post->tags()->attach($request->tags);
+
         return response($post, 201);
+    }
+
+    public function fileDownload($id){
+        $doc = Document::find($id);
+        $content = Storage::disk('public')->download("uploads/".$doc->postid."/".$doc->name);
+        return $content;
     }
 
     public function modifypost(Request $request){
@@ -115,6 +149,8 @@ class APIController extends Controller
         $post->body = $request->content;
         $post->category_id = $request->category;
         $post->save();
+
+        $post->tags()->sync($request->tags);
 
         return response($post, 201);
     }

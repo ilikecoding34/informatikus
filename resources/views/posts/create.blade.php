@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <form class="form-group" method="POST" action="{{route('posts.store')}}">
+            <form class="form-group" method="POST" action="{{route('posts.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Cím</label>
@@ -46,10 +46,23 @@
                         </select>
                     </div>
                 </div>
+                <br>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file" name="file">
+                    <label class="custom-file-label" for="file">Choose file</label>
+                </div>
+                <br>
+                <br>
                 <button type="submit" class="btn btn-success">Mentés</button>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
 
   @endsection

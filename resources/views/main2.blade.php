@@ -56,6 +56,13 @@
                 </div>
                 <p class="card-text">{{$post->body}}</p>
                 </div>
+                <div class="form-group mb-2">
+                    <a href="{{route('fileDownload', $file->id)}}">
+                        <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title={{$file->name}}>
+                            {{$file->name}}
+                        </button>
+                    </a>
+                </div>
               </div>
 
         </div>

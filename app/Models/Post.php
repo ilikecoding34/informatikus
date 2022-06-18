@@ -15,6 +15,11 @@ class Post extends Model
         return $this->belongsToMany(Tag::class, 'posts_tags')->withTimestamps();
     }
 
+    public function file()
+    {
+        return $this->hasOne(Document::class, 'postid');
+    }
+
     public function comments(){
         return $this->hasMany(Comment::class);
     }

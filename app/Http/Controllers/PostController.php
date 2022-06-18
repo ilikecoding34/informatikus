@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Setting;
 use App\Models\Category;
+use App\Models\Document;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -49,6 +50,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $post = new Post;
         $post->user_id = Auth::user()->id;
         $post->title = $request->title;
@@ -57,6 +59,23 @@ class PostController extends Controller
         $post->category_id = $request->category;
         $post->save();
 
+        $postid = $post->id;
+/*
+        $request->validate([
+            'file' => 'required|mimes:csv,txt,xlx,xls,pdf,jpeg,jpg,png,gif|required|max:10000'
+        ]);
+*/
+        $fileModel = new Document;
+
+        if($request->file('file')) {
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads/'.$postid, $fileName, 'public');
+            $fileModel->userid = Auth::user()->id;
+            $fileModel->postid = $postid;
+            $fileModel->name = $fileName;
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->save();
+        }
         $post->tags()->attach($request->tags);
 
         return redirect(route('posts.index'));
