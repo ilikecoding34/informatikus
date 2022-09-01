@@ -3,13 +3,19 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="@if($settings->col_count == 1 || ($settings->col_count == 2 && $post->comments->isEmpty()))
-            col-12
-            @elseif($settings->col_count == 2)
-            col-9
-            @elseif($settings->col_count == 3)
-            col-9
+        <div class="
+            @if (Auth::user())
+                @if($settings->col_count == 1)
+                col-12
+                @elseif($settings->col_count == 2)
+                col-9
+                @elseif($settings->col_count == 3)
+                col-9
+                @endif
+            @else
+                col-12
             @endif
+
              order-{{$settings->col_post}}">
              <div class="card">
                 <div class="card-header">
@@ -61,12 +67,12 @@
                           </div>
                       </div>
                   </div>
-              @endforeach
-          @endif
+                @endforeach
+                @endif
         </div>
 
 
-        @if ($settings->col_related)
+        @if ($settings->col_related > 0 && Auth::user())
         <div class="col-3 order-{{$settings->col_related}}">
             Ez mindig a related rész
         </div>
