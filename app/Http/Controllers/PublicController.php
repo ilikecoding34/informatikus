@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\Setting;
 use App\Models\Comment;
 use App\Models\Document;
@@ -15,12 +16,39 @@ class PublicController extends Controller
     public function main(){
         $user = auth()->user();
         if ($user == null){
+            $tags = Tag::all();
             $posts = Post::with('user')->orderBy('id', 'DESC')->paginate(15);
-            return view('main', compact('posts'));
+            return view('main', compact('posts','tags'));
         }else{
             if($user->email_verified_at != null){
+                $tags = Tag::all();
                 $posts = Post::with('user')->orderBy('id', 'DESC')->paginate(15);
-                return view('main', compact('posts'));
+                return view('main', compact('posts','tags'));
+            }else{
+                Auth::logout();
+                return redirect('/email/verify');
+            }
+        }
+    }
+
+    public function category($id){
+
+        $user = auth()->user();
+        if ($user == null){
+            $tags = Tag::all();
+            $posts = Post::with('user', 'tags')
+                ->whereHas('tags', function ($query) use($id) {
+                    $query->where('tag_id', $id);
+                })->orderBy('id', 'DESC')->paginate(15);
+            return view('main', compact('posts','tags'));
+        }else{
+            if($user->email_verified_at != null){
+                $tags = Tag::all();
+                $posts = Post::with('user', 'tags')
+                    ->whereHas('tags', function ($query) use($id) {
+                        $query->where('tag_id', $id);
+                    })->orderBy('id', 'DESC')->paginate(15);
+                return view('main', compact('posts','tags'));
             }else{
                 Auth::logout();
                 return redirect('/email/verify');

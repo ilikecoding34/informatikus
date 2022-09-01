@@ -5,7 +5,13 @@
 <div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @foreach ($tags as $tag)
+            <a href="/category/{{$tag->id}}">
+                <span class="badge badge-primary">{{$tag->name}}</span>
+            </a>
+            @endforeach
             <div class="list-group">
+                @if ($posts->isNotEmpty())
                 @foreach ($posts as $item)
                 <div class="card mb-3">
                     <a href="{{route('singlePost', $item->id)}}" class="list-group-item list-group-item-action">
@@ -34,6 +40,9 @@
                     </a>
                 </div>
                 @endforeach
+                @else
+                    Nincs megjeleníthető bejegyzés
+                @endif
                 <div>
                 {{ $posts->links() }}
             </div>

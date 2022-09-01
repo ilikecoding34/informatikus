@@ -25,6 +25,7 @@ use App\Http\Controllers\SendEmailController;
 */
 
 Route::get('/', [PublicController::class, 'main'])->name('main');
+Route::get('/category/{id}', [PublicController::class, 'category'])->name('category');
 Route::get('/main', [PublicController::class, 'main'])->name('main');
 Route::get('/main/{id}', [PublicController::class, 'singlePost'])->name('singlePost');
 Route::get('/download-file/{id}', [PublicController::class, 'fileDownload'])->name('fileDownload');
