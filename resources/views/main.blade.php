@@ -8,7 +8,7 @@
             <div class="list-group">
                 @foreach ($posts as $item)
                 <div class="card mb-3">
-                    <a href="{{route('main_post', $item->id)}}" class="list-group-item list-group-item-action">
+                    <a href="{{route('singlePost', $item->id)}}" class="list-group-item list-group-item-action">
                     <div class="card-body">
                         <h5 class="card-title">{{$item->title}}</h5>
                         <p class="card-text">{{Str::limit($item->body, 200)}}</p>
@@ -34,6 +34,9 @@
                     </a>
                 </div>
                 @endforeach
+                <div>
+                {{ $posts->links() }}
+            </div>
             </div>
         </div>
 

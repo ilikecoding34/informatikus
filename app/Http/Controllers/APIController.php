@@ -115,6 +115,8 @@ class APIController extends Controller
         $post->category_id = $request->category;
         $post->save();
 
+        $post->tags()->attach($request->tags);
+
         $request->validate([
             'file' => 'required|mimes:csv,txt,xlx,xls,pdf,jpeg,jpg,png,gif|required|max:10000'
             ]);
@@ -131,15 +133,12 @@ class APIController extends Controller
             $fileModel->save();
         }
 
-        $post->tags()->attach($request->tags);
-
         return response($post, 201);
     }
 
     public function fileDownload($id){
         $doc = Document::find($id);
-        $content = Storage::disk('public')->download("uploads/".$doc->postid."/".$doc->name);
-        return $content;
+        return response($doc->file_path, 200);
     }
 
     public function modifypost(Request $request){

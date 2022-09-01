@@ -39,10 +39,18 @@
                         </select>
                     </div>
                     <div class="col-4">
+
                         <label class="col-4 control-label">Tags</label>
                         <select name='tags[]' multiple class="form-control">
                             @foreach ($tags as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option
+                                @foreach ( $post->tags as $tag)
+                                    @if($tag->name == $item->name)
+                                        selected
+                                    @endif
+                                @endforeach
+
+                                value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>

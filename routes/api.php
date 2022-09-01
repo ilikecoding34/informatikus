@@ -20,7 +20,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     //All secure URL's
     Route::get("users",[APIController::class,'users']);
     Route::post('newpost', [APIController::class, 'newpost']);
-    Route::post('filecontrol', [APIController::class, 'fileDownload']);
+
     Route::post('modifypost', [APIController::class, 'modifypost']);
     Route::post('newcomment', [APIController::class, 'newcomment']);
     Route::post('modifycomment', [APIController::class, 'modifycomment']);
@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 });
 
 //Auth::routes(['verify' => true]);
-
+Route::get('filecontrol/{id}', [APIController::class, 'fileDownload']);
 Route::get('posts', [APIController::class, 'posts']);
 Route::get('postsnewversion', [APIController::class, 'postswithtags']);
 Route::get("post/{id}",[APIController::class,'getpost']);
