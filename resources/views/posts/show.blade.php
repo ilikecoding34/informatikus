@@ -38,11 +38,6 @@
 
                 @include('comments.index')
 
-                @if (Auth::user())
-                @include('comments.create')
-                @endif
-
-
         </div>
     </div>
 </div>

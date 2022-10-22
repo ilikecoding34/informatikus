@@ -42,7 +42,7 @@ class CommentController extends Controller
         $comment->body = $request->body;
         $comment->save();
 
-        return redirect(route('main_post', $request->post));
+        return redirect()->route('singlePost', $request->post);
     }
 
     /**
@@ -67,7 +67,7 @@ class CommentController extends Controller
         if (Auth::user() && (Auth::user()->id == $comment->user_id)){
             return view('comments.edit', compact('comment'));
         }else{
-            return redirect(route('posts.index'));
+            return redirect()->route('posts.index');
         }
     }
 
@@ -83,7 +83,7 @@ class CommentController extends Controller
         if (Auth::user()->id == $comment->user_id){
             Comment::where('id', $comment->id)->update(['body' => $request->body]);
         }
-        return redirect(route('posts.show', $comment->post_id));
+        return redirect()->route('posts.show', $comment->post_id);
     }
 
     /**
@@ -96,6 +96,6 @@ class CommentController extends Controller
     {
         $comment->delete();
 
-        return redirect(route('main_post', $comment->post_id));
+        return redirect()->route('singlePost', $comment->post_id);
     }
 }

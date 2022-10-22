@@ -105,25 +105,39 @@ class APIController extends Controller
         return response($post, 200);
     }
 
-    public function newpost(Request $request){
+    public function newpost(Request $request)
+    {
 
         $post = new Post;
         $post->user_id = $request->userid;
         $post->title = $request->title;
-        $post->link = $request->link;
         $post->body = $request->content;
         $post->category_id = $request->category;
+
+        if(isset($request->link)){
+            $linkexist = Post::where('link','=', $request->link)->first();
+
+            if(isset($linkexist)){
+                return response()->json('link exist', 200);
+            }else{
+                $post->link = $request->link;
+            }
+        }
+
         $post->save();
 
-        $post->tags()->attach($request->tags);
+        if(isset($request->tags)){
+            $post->tags()->attach($request->tags);
+        }
 
-        $request->validate([
-            'file' => 'required|mimes:csv,txt,xlx,xls,pdf,jpeg,jpg,png,gif|required|max:10000'
+/*
+        if($request->file()) {
+            $request->validate([
+                'file' => 'required|mimes:csv,txt,xlx,xls,pdf,jpeg,jpg,png,gif|required|max:10000'
             ]);
 
-        $fileModel = new Document;
+            $fileModel = new Document;
 
-        if($request->file()) {
             $fileName = time().'_'.$request->file->getClientOriginalName();
             $filePath = $request->file('file')->storeAs('uploads/'.$post->id.'/', $fileName, 'public');
             $fileModel->userid = 1;
@@ -131,9 +145,11 @@ class APIController extends Controller
             $fileModel->name = time().'_'.$request->file->getClientOriginalName();
             $fileModel->file_path = '/storage/' . $filePath;
             $fileModel->save();
-        }
 
-        return response($post, 201);
+        }
+        */
+
+        return response()->json('success', 200);
     }
 
     public function fileDownload($id){
@@ -154,7 +170,8 @@ class APIController extends Controller
         return response($post, 201);
     }
 
-    public function newcomment(Request $request){
+    public function newcomment(Request $request)
+    {
         $comment = new Comment;
         $comment->user_id = $request->userid;
         $comment->body = $request->content;
@@ -167,6 +184,7 @@ class APIController extends Controller
     }
 
     public function modifycomment(Request $request){
+
         $comment = Comment::find($request->id);
         $comment->body = $request->content;
         $comment->save();
