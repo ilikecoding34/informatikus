@@ -9,20 +9,26 @@ use App\Models\Setting;
 use App\Models\Comment;
 use App\Models\Document;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Auth;
+use Str;
 
 class PublicController extends Controller
 {
-    public function main(){
+    public function main(Request $request){
+        if(Str::contains($request->header('User-Agent'), 'Android') || Str::contains($request->header('User-Agent'), 'iPhone')){
+            return redirect('https://m.informatikusleszek.hu/#/');
+        }
+
         $user = auth()->user();
         if ($user == null){
             $tags = Tag::all();
-            $posts = Post::with('user')->orderBy('id', 'DESC')->paginate(15);
+            $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(15);
             return view('main', compact('posts','tags'));
         }else{
             if($user->email_verified_at != null){
                 $tags = Tag::all();
-                $posts = Post::with('user')->orderBy('id', 'DESC')->paginate(15);
+                $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(15);
                 return view('main', compact('posts','tags'));
             }else{
                 Auth::logout();
@@ -36,7 +42,7 @@ class PublicController extends Controller
         $user = auth()->user();
         if ($user == null){
             $tags = Tag::all();
-            $posts = Post::with('user', 'tags')
+            $posts = Post::with('user', 'tags', 'comments')
                 ->whereHas('tags', function ($query) use($id) {
                     $query->where('tag_id', $id);
                 })->orderBy('id', 'DESC')->paginate(15);
@@ -44,7 +50,7 @@ class PublicController extends Controller
         }else{
             if($user->email_verified_at != null){
                 $tags = Tag::all();
-                $posts = Post::with('user', 'tags')
+                $posts = Post::with('user', 'tags', 'comments')
                     ->whereHas('tags', function ($query) use($id) {
                         $query->where('tag_id', $id);
                     })->orderBy('id', 'DESC')->paginate(15);
@@ -59,8 +65,10 @@ class PublicController extends Controller
     public function singlePost($id){
         $settings = Setting::find(1);
         $file = Document::where('postid', $id)->first();
-        $post = Post::where('id', $id)->with(['user','comments', 'tags'])->first();
-        $post->increment('view');
+        $post = Post::where('id', $id)->with('user','comments', 'tags')->first();
+        if(url()->current() == url()->previous()){
+            $post->increment('view');
+        }
         return view('singlepost', compact('post', 'settings', 'file'));
     }
 

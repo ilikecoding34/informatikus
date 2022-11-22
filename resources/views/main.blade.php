@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    \Carbon\Carbon::setlocale("hu");
+@endphp
+
 <div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -23,6 +27,7 @@
                             <div class="col">
                                 <p class="card-text text-left">
                                     <small>Megtekintés: {{$item->view}}</small><br>
+                                    <small>Hozzászólások: {{count($item->comments)}}</small><br>
                                     <small class="text-muted">Szerző:
                                         @if ($item->user != null)
                                         {{$item->user->name}}
@@ -34,7 +39,7 @@
                             </div>
                             <div class="col">
                                 <p class="card-text text-right">
-                                    <small class="text-muted">Utoljára frissítve: {{$item->updated_at->diffForHumans(null, true).'ja' }}</small>
+                                    <small class="text-muted">Utoljára frissítve: {{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}</small>
                                 </p>
                             </div>
                         </div>

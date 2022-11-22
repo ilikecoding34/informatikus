@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+
+@php
+    \Carbon\Carbon::setlocale("hu");
+@endphp
+
 <div class="container">
     <div class="row">
         <div class="
@@ -46,16 +51,24 @@
                 </div>
                 @endisset
 
-              </div>
+<hr>
+<p class="text-center">Hozzászólások</p>
               @if ($post->comments->isNotEmpty())
               @foreach ($post->comments as $item)
-                  <div class="card my-2">
+                  <div class="card m-2">
                       <div class="card-body">
                           <div class="row">
-                              <div class="col">
+                              <div class="col-11">
                                   {{$item->body}}
+                                  <p class="card-text text-left">
+                                    <small>{{$item->user->name}}</small>
+                                    <br>
+                                    <small class="text-muted">Létrehozva: {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
+                                  </p>
                               </div>
-                              @auth
+
+                              <div class="col">
+                                @auth
                               <div class="m-2">
                                 <form action="{{ route('comments.destroy',$item) }}" method="POST">
                                     @csrf
@@ -70,11 +83,13 @@
                             </div>
                               @endauth
 
+                            </div>
                           </div>
                       </div>
                   </div>
                 @endforeach
                 @endif
+            </div>
         </div>
 
 
