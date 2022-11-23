@@ -2,10 +2,6 @@
 
 @section('content')
 
-@php
-    \Carbon\Carbon::setlocale("hu");
-@endphp
-
 <div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-md-12">
