@@ -4,15 +4,17 @@
 
 <div class="container mt-2">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-10">
+            <div class="row justify-content-md-center">
             @foreach ($tags as $tag)
             <a href="/category/{{$tag->name}}">
                 <span class="badge badge-primary">{{$tag->name}}</span>
             </a>
             @endforeach
+            </div>
             <div class="list-group">
                 @if ($posts->isNotEmpty())
-                <div class="col-10">
+                <div class="col-12">
                 @foreach ($posts as $item)
                         @if($loop->odd)
                             <div class="row justify-content-md-center">
