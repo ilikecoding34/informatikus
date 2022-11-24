@@ -44,7 +44,7 @@ class PublicController extends Controller
             $tags = Tag::all();
             $posts = Post::with('user', 'tags', 'comments')
                 ->whereHas('tags', function ($query) use($id) {
-                    $query->where('tag_id', $id);
+                    $query->where('name', $id);
                 })->orderBy('id', 'DESC')->paginate(15);
             return view('main', compact('posts','tags'));
         }else{
@@ -52,7 +52,7 @@ class PublicController extends Controller
                 $tags = Tag::all();
                 $posts = Post::with('user', 'tags', 'comments')
                     ->whereHas('tags', function ($query) use($id) {
-                        $query->where('tag_id', $id);
+                        $query->where('name', $id);
                     })->orderBy('id', 'DESC')->paginate(15);
                 return view('main', compact('posts','tags'));
             }else{
