@@ -15,6 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -25,7 +26,7 @@
 
 </head>
 <body>
-    <div id="app">
+    <div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand " href="{{ url('/') }}">
@@ -104,9 +105,9 @@
             </div>
         </nav>
     </div>
-        <main class="py-4">
-            @yield('content')
-        </main>
+    <div id='app'>
+        @yield('content')
+    </div>
     </div>
     @livewireScripts
 </body>

@@ -25,6 +25,11 @@ use App\Http\Controllers\SendEmailController;
 */
 
 Route::get('/', [PublicController::class, 'main'])->name('main');
+
+Route::get('/vue', function () {
+    return view('test');
+});
+
 Route::get('/category/{id}', [PublicController::class, 'category'])->name('category');
 Route::get('/main', [PublicController::class, 'main'])->name('main');
 Route::get('/{id}', [PublicController::class, 'singlePost'])->name('singlePost');

@@ -10,21 +10,24 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "@popperjs/core": "^2.10.2",
+        "axios": "^0.21.4",
         "bootstrap": "^4.0.0",
         "jquery": "^3.6.0",
-        "jquery-ui": "^1.12.1",
-        "laravel-mix": "^6.0.27",
+        "jquery-ui": "^1.13.2",
+        "laravel-mix": "^6.0.49",
         "lodash": "^4.17.19",
         "postcss": "^8.3.6",
+        "popper.js": "^1.12",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-loader": "^15.9.5",
+        "vue-loader": "^15.10.1",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "popper.js": "^1.16.1"
+        "autoprefixer": "10.4.5",
+        "moment": "^2.29.4"
     }
 }

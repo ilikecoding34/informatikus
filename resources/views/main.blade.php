@@ -8,7 +8,7 @@
             <div class="row justify-content-md-center">
             @foreach ($tags as $tag)
             <a href="/category/{{$tag->name}}">
-                <span class="badge badge-primary">{{$tag->name}}</span>
+                <span class="badge badge-primary m-1">{{$tag->name}}</span>
             </a>
             @endforeach
             </div>
@@ -19,7 +19,7 @@
                         @if($loop->odd)
                             <div class="row justify-content-md-center">
                         @endif
-                            <div class="col-5">
+                            <div class="col-6">
                                 <div class="card mb-3">
                                     <a href="{{route('singlePost', $item->id)}}" class="list-group-item list-group-item-action">
                                     <div class="card-body">
@@ -41,10 +41,11 @@
                                                 </p>
                                             </div>
                                             <div class="col">
-                                                <p class="card-text text-right">
-                                                    <small class="text-muted">Utoljára frissítve: {{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}</small>
-                                                </p>
+                                                <div class="card-text text-rigth">
+                                                    <timeupdate inputtime="{{$item->updated_at}}"></timeupdate>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                     </a>

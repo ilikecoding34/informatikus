@@ -66,7 +66,7 @@ class PublicController extends Controller
         $settings = Setting::find(1);
         $file = Document::where('postid', $id)->first();
         $post = Post::where('id', $id)->with('user','comments', 'tags')->first();
-        if(url()->current() == url()->previous()){
+        if(url()->current() != url()->previous()){
             $post->increment('view');
         }
         return view('singlepost', compact('post', 'settings', 'file'));
