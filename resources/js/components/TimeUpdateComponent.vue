@@ -35,12 +35,14 @@
                 let minutes = moment(now).diff(then, 'minutes') %60;
                 let hours = moment(now).diff(then, 'hours') % 24;
                 let days = moment(now).diff(then, 'days') % 7;
-                let weeks = moment(now).diff(then, 'weeks');
-                hours > 0 ? hours = hours + ' óra - ' : '';
-                days > 0 ? days = days + ' nap - ' : '';
-                weeks > 0 ? weeks + ' hét - ' : '';
+                let weeks = moment(now).diff(then, 'weeks') % 4;
+                let months = moment(now).diff(then, 'months');
+                hours = hours > 0 ? hours + ' óra - ' : '';
+                days = days > 0 ? days + ' nap - ' : '';
+                weeks = weeks > 0 ? weeks + ' hét - ' : '';
+                months = months > 0 ? months + ' hónap - ' : '';
 
-                this.interval =  weeks + days + hours + minutes + ' perc - ' + seconds + ' másodperc';
+                this.interval =  months + weeks + days + hours + minutes + ' perc - ' + seconds + ' másodperc';
             },
         },
         computed: {

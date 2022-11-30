@@ -4,7 +4,7 @@
 
 <div class="container mt-2">
     <div class="row justify-content-center">
-        <div class="col-10">
+        <div class="col-12">
             <div class="row justify-content-md-center">
             @foreach ($tags as $tag)
             <a href="/category/{{$tag->name}}">

@@ -2197,11 +2197,13 @@ __webpack_require__.r(__webpack_exports__);
       var minutes = moment(now).diff(then, 'minutes') % 60;
       var hours = moment(now).diff(then, 'hours') % 24;
       var days = moment(now).diff(then, 'days') % 7;
-      var weeks = moment(now).diff(then, 'weeks');
-      hours > 0 ? hours = hours + ' óra - ' : '';
-      days > 0 ? days = days + ' nap - ' : '';
-      weeks > 0 ? weeks + ' hét - ' : '';
-      this.interval = weeks + days + hours + minutes + ' perc - ' + seconds + ' másodperc';
+      var weeks = moment(now).diff(then, 'weeks') % 4;
+      var months = moment(now).diff(then, 'months');
+      hours = hours > 0 ? hours + ' óra - ' : '';
+      days = days > 0 ? days + ' nap - ' : '';
+      weeks = weeks > 0 ? weeks + ' hét - ' : '';
+      months = months > 0 ? months + ' hónap - ' : '';
+      this.interval = months + weeks + days + hours + minutes + ' perc - ' + seconds + ' másodperc';
     }
   },
   computed: {

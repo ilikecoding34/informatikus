@@ -23,12 +23,12 @@ class PublicController extends Controller
         $user = auth()->user();
         if ($user == null){
             $tags = Tag::all();
-            $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(15);
+            $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(20);
             return view('main', compact('posts','tags'));
         }else{
             if($user->email_verified_at != null){
                 $tags = Tag::all();
-                $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(15);
+                $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(20);
                 return view('main', compact('posts','tags'));
             }else{
                 Auth::logout();
@@ -38,28 +38,12 @@ class PublicController extends Controller
     }
 
     public function category($id){
-
-        $user = auth()->user();
-        if ($user == null){
-            $tags = Tag::all();
-            $posts = Post::with('user', 'tags', 'comments')
-                ->whereHas('tags', function ($query) use($id) {
-                    $query->where('name', $id);
-                })->orderBy('id', 'DESC')->paginate(15);
-            return view('main', compact('posts','tags'));
-        }else{
-            if($user->email_verified_at != null){
-                $tags = Tag::all();
-                $posts = Post::with('user', 'tags', 'comments')
-                    ->whereHas('tags', function ($query) use($id) {
-                        $query->where('name', $id);
-                    })->orderBy('id', 'DESC')->paginate(15);
-                return view('main', compact('posts','tags'));
-            }else{
-                Auth::logout();
-                return redirect('/email/verify');
-            }
-        }
+        $tags = Tag::all();
+        $posts = Post::with('user', 'tags', 'comments')
+            ->whereHas('tags', function ($query) use($id) {
+                $query->where('name', $id);
+            })->orderBy('id', 'DESC')->paginate(20);
+        return view('main', compact('posts','tags'));
     }
 
     public function singlePost($id){
