@@ -16,7 +16,8 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "livewire/livewire": "^2.10"
+        "livewire/livewire": "^2.10",
+        "spatie/laravel-cookie-consent": "^3.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

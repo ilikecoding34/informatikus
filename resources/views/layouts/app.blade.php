@@ -105,6 +105,7 @@
             </div>
         </nav>
     </div>
+    @include('cookie-consent::index')
     <div id='app'>
         @yield('content')
     </div>
