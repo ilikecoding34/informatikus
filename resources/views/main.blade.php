@@ -23,7 +23,20 @@
                                 <div class="card mb-3">
                                     <a href="{{route('singlePost', $item->id)}}" class="list-group-item list-group-item-action">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{$item->title}}</h5>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h5 class="card-title">{{$item->title}}</h5>
+                                            </div>
+                                            <div class="col-4">
+                                                @foreach ($item->tags as $tag)
+                                                <small>
+                                                    <span class="bg-info text-dark border rounded border-dark d-inline-flex p-1 mb-1">
+                                                        #{{$tag->name}}
+                                                    </span>
+                                                </small>
+                                                @endforeach
+                                            </div>
+                                        </div>
 
                                         <p class="card-text">{{Str::limit($item->body, 200)}}</p>
                                         <div class="row">

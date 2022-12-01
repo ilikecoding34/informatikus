@@ -23,12 +23,12 @@ class PublicController extends Controller
         $user = auth()->user();
         if ($user == null){
             $tags = Tag::all();
-            $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(20);
+            $posts = Post::with('user','tags', 'comments')->orderBy('id', 'DESC')->paginate(20);
             return view('main', compact('posts','tags'));
         }else{
             if($user->email_verified_at != null){
                 $tags = Tag::all();
-                $posts = Post::with('user', 'comments')->orderBy('id', 'DESC')->paginate(20);
+                $posts = Post::with('user','tags', 'comments')->orderBy('id', 'DESC')->paginate(20);
                 return view('main', compact('posts','tags'));
             }else{
                 Auth::logout();
