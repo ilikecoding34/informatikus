@@ -5,7 +5,7 @@
 </head>
 <body>
 
- <h1>{{ $details['name'] }}</h1>
+ <h1>{{ $details }}</h1>
  <p>A fedélzeten</p>
 
 </body>
