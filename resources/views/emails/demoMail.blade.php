@@ -5,7 +5,7 @@
 </head>
 <body>
 
- <h1>{{ $details }}</h1>
+ <h1></h1>
  <p>A fedélzeten</p>
 
 </body>

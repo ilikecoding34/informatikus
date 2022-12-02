@@ -37,12 +37,12 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $comment = new Comment;
-        $comment->post_id = $request->post;
+        $comment->post_id = $request->postid;
         $comment->user_id = Auth::user()->id;
         $comment->body = $request->body;
         $comment->save();
 
-        return redirect()->route('singlePost', $request->post);
+        return redirect()->route('singlePost', $request->postid);
     }
 
     /**
