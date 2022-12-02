@@ -34,6 +34,7 @@
                         </a>
                     </div>
                 </div>
+                @if (auth()->user()->id == $item->user_id)
                 <div class="col col-1">
                     <form action="{{ route('posts.destroy',$item->id) }}" method="POST">
                         @csrf
@@ -41,7 +42,7 @@
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
-
+                @endif
                 </div>
                 @endforeach
             </div>

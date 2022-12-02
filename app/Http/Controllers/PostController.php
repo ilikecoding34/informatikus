@@ -101,10 +101,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $post = Post::find($post->id);
-        $tags = Tag::all();
-        $categories = Category::all();
-        return view('posts.edit', compact('post', 'tags', 'categories'));
+        if (Auth::user()->id == $post->user_id){
+            $post = Post::find($post->id);
+            $tags = Tag::all();
+            $categories = Category::all();
+            return view('posts.edit', compact('post', 'tags', 'categories'));
+        }else{
+            return redirect(route('posts.index'));
+        }
     }
 
     /**
@@ -116,14 +120,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post = Post::find($post->id);
-        $post->user_id = Auth::user()->id;
-        $post->title = $request->title;
-        $post->body = $request->content;
-        $post->category_id = $request->category;
-        $post->save();
+        if (Auth::user()->id == $post->user_id){
+            $post = Post::find($post->id);
+            $post->user_id = Auth::user()->id;
+            $post->title = $request->title;
+            $post->body = $request->content;
+            $post->category_id = $request->category;
+            $post->save();
 
-        $post->tags()->sync($request->tags);
+            $post->tags()->sync($request->tags);
+        }
 
         return redirect(route('posts.index'));
     }
@@ -136,7 +142,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        if (Auth::user()->id == $post->user_id){
+            $post->delete();
+        }
         return redirect(route('posts.index'));
     }
 

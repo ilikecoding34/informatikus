@@ -4,20 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="
-            @if (Auth::user())
-                @if($settings->col_count == 1)
-                col-12
-                @elseif($settings->col_count == 2)
-                col-9
-                @elseif($settings->col_count == 3)
-                col-9
-                @endif
-            @else
-                col-12
-            @endif
-
-             order-{{$settings->col_post}}">
+        <div class="col-12">
              <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">{{$post->title}}</h5>
@@ -49,56 +36,46 @@
 
 <hr>
 <p class="text-center">Hozzászólások</p>
-              @if ($post->comments->isNotEmpty())
-              @foreach ($post->comments as $item)
-                  <div class="card m-2">
-                      <div class="card-body">
-                          <div class="row">
-                              <div class="col-11">
-                                  {{$item->body}}
-                                  <p class="card-text text-left">
-                                    <small>{{$item->user->name}}</small>
-                                    <br>
-                                    <small class="text-muted">Létrehozva: {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
-                                  </p>
-                              </div>
-
-                              <div class="col">
-                                @auth
-                              <div class="m-2">
-                                <form action="{{ route('comments.destroy',$item) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                        </svg>
-                                    </button>
-                                </form>
-                            </div>
-                              @endauth
-
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                @endforeach
+@if ($post->comments->isNotEmpty())
+@foreach ($post->comments as $item)
+    <div class="card m-2">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-10">
+                    {{$item->body}}
+                    <p class="card-text text-left">
+                    <small>{{$item->user->name}}</small>
+                    <br>
+                    <small class="text-muted">Létrehozva: {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
+                    </p>
+                </div>
+                <div class="col-2">
+                <div class="m-2">
+                @if (auth()->user()->id == $item->user_id)
+                <a href="{{ route('comments.edit',$item) }}">Szerkesztés</a>
+                <form action="{{ route('comments.destroy',$item) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </button>
+                </form>
                 @endif
             </div>
+            </div>
+            </div>
         </div>
-
-
-        @if ($settings->col_related > 0 && Auth::user())
-        <div class="col-3 order-{{$settings->col_related}}">
-            Ez mindig a related rész
-        </div>
-        @endif
-
     </div>
-
-        @if (Auth::user())
-            @include('comments.create')
-        @endif
+@endforeach
+@endif
+</div>
+</div>
+</div>
+@if (Auth::user())
+    @include('comments.create')
+@endif
 </div>
 @endsection
