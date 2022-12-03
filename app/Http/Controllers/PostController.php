@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('id', 'desc')->get();
         return view('posts.index', compact('posts'));
     }
 
@@ -92,7 +92,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post = Post::find($post->id);
+        $post->with('comments');
         return view('posts.show', compact('post'));
     }
 

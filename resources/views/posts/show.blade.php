@@ -37,10 +37,42 @@
             @if (auth()->user()->id == $post->user_id)
                 <a class="btn btn-secondary" href="{{route('posts.edit', $post->id)}}" role="button">Szerkeszt</a>
             @endif
-            @include('comments.index')
+            </div>
+            </div>
+<br>
+
+                @foreach ($post->comments as $item)
+                <div class="card mb-3">
+                    <a href="{{route('comments.edit', $item->id)}}" class="list-group-item list-group-item-action">
+                    <div class="card-body">
+                        <div class="card-title">
+                            @if (isset($item->post))
+                            Bejegyzés címe: {{$item->post->title}}
+                            @else
+                                Törölt bejegyzés
+                            @endif
+                        </div>
+                        <p class="card-text">{{$item->body}}</p>
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text text-left">
+                                    <small class="text-muted">Szerző: {{$item->user->name}}</small>
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text text-right">
+                                    <small class="text-muted"><timeupdate inputtime="{{$item->updated_at}}"></timeupdate></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Auth::user())
+                    </a>
+                    @endif
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
-</div>
 
   @endsection
