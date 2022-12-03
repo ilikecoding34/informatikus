@@ -83,8 +83,8 @@
                                     </a>
                                     @endif
 
-                                       <a class="dropdown-item" href="{{ route('settings') }}">
-                                        {{ __('Beállítások') }}
+                                        <a class="dropdown-item" href="{{ route('comments.index') }}">
+                                        {{ __('Hozzászólásaim') }}
                                        </a>
                                        <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -95,7 +95,6 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-
                                 </div>
                                 @endif
                             </li>

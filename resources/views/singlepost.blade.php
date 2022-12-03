@@ -41,16 +41,31 @@
     <div class="card m-2">
         <div class="card-body">
             <div class="row">
-                <div class="col-10">
-                    {{$item->body}}
-                    <p class="card-text text-left">
-                    <small>{{$item->user->name}}</small>
-                    <br>
-                    <small class="text-muted">Létrehozva: {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
-                    </p>
+                <div
+                @auth
+                class="col-10"
+                @else
+                class="col-12"
+                @endauth
+                >
+                    <p class="card-text">{{$item->body}}</p>
+                    <div class="row">
+                        <div class="col-7">
+                            <p class="card-text text-left">
+                                <small>Szerző: {{$item->user->name}}</small>
+                            </p>
+                        </div>
+                        <div class="col-5">
+                            <div class="card-text text-rigth">
+                                <timeupdate inputtime="{{$item->updated_at}}"></timeupdate>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                @auth
                 <div class="col-2">
                 <div class="m-2">
+
                 @if (auth()->user()->id == $item->user_id)
                 <a href="{{ route('comments.edit',$item) }}">Szerkesztés</a>
                 <form action="{{ route('comments.destroy',$item) }}" method="POST">
@@ -64,8 +79,11 @@
                     </button>
                 </form>
                 @endif
+
+
             </div>
             </div>
+            @endauth
             </div>
         </div>
     </div>

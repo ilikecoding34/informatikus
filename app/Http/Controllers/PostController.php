@@ -25,9 +25,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $user_settings = Setting::where('user_id', Auth::user()->id)->first();
         $posts = Post::all();
-        return view('posts.index', compact('posts', 'user_settings'));
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -50,33 +49,37 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = Auth::user()->id;
 
         $post = new Post;
-        $post->user_id = Auth::user()->id;
+        $post->user_id = $user_id;
         $post->title = $request->title;
         $post->link = $request->link;
         $post->body = $request->content;
         $post->category_id = $request->category;
+
         $post->save();
 
-        $postid = $post->id;
-/*
-        $request->validate([
-            'file' => 'required|mimes:csv,txt,xlx,xls,pdf,jpeg,jpg,png,gif|required|max:10000'
-        ]);
-*/
-        $fileModel = new Document;
-
         if($request->file('file')) {
+
+            $request->validate([
+                'file' => 'required|mimes:csv,txt,xlx,xls,pdf,jpeg,jpg,png,gif|required|max:10000'
+            ]);
+
+            $fileModel = new Document;
+
             $fileName = time().'_'.$request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads/'.$postid, $fileName, 'public');
-            $fileModel->userid = Auth::user()->id;
-            $fileModel->postid = $postid;
+            $filePath = $request->file('file')->storeAs('uploads/'.$post->id, $fileName, 'public');
+            $fileModel->userid = $user_id;
+            $fileModel->postid = $post->id;
             $fileModel->name = $fileName;
             $fileModel->file_path = '/storage/' . $filePath;
             $fileModel->save();
         }
-        $post->tags()->attach($request->tags);
+
+        if(isset($request->tags)){
+            $post->tags()->attach($request->tags);
+        }
 
         return redirect(route('posts.index'));
     }
@@ -128,7 +131,9 @@ class PostController extends Controller
             $post->category_id = $request->category;
             $post->save();
 
-            $post->tags()->sync($request->tags);
+            if(isset($request->tags)){
+                $post->tags()->sync($request->tags);
+            }
         }
 
         return redirect(route('posts.index'));
@@ -148,8 +153,4 @@ class PostController extends Controller
         return redirect(route('posts.index'));
     }
 
-    public function comment_store(Request $request,Post $post)
-    {
-        return $request;
-    }
 }

@@ -12,15 +12,17 @@ class NotifyMail extends Mailable
     use Queueable, SerializesModels;
 
     public $details;
+    public $type;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($details, $type)
     {
         $this->details = $details;
+        $this->type = $type;
     }
 
     /**
@@ -30,7 +32,12 @@ class NotifyMail extends Mailable
      */
     public function build()
     {
-        $this->subject('Új regisztráció');
-        return $this->view('emails.demoMail');
+        if($this->type == 'comment'){
+            $this->subject('Új hozzászólás');
+            return $this->view('emails.commentMail');
+        }else{
+            $this->subject('Új regisztráció');
+            return $this->view('emails.demoMail');
+        }
     }
 }

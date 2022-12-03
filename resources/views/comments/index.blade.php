@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 
 
 <div class="container mt-2">
@@ -5,13 +8,17 @@
 
         <div class="col-md-12">
             <div class="list-group">
-                @foreach ($post->comments as $item)
+                @foreach ($comments as $item)
                 <div class="card mb-3">
-                    @if (Auth::user())
                     <a href="{{route('comments.edit', $item->id)}}" class="list-group-item list-group-item-action">
-
-                    @endif
                     <div class="card-body">
+                        <div class="card-title">
+                            @if (isset($item->post))
+                            Bejegyzés címe: {{$item->post->title}}
+                            @else
+                                Törölt bejegyzés
+                            @endif
+                        </div>
                         <p class="card-text">{{$item->body}}</p>
                         <div class="row">
                             <div class="col">
@@ -21,7 +28,7 @@
                             </div>
                             <div class="col">
                                 <p class="card-text text-right">
-                                    <small class="text-muted">Utoljára frissítve: {{$item->updated_at->diffForHumans(null, true).'ja' }}</small>
+                                    <small class="text-muted"><timeupdate inputtime="{{$item->updated_at}}"></timeupdate></small>
                                 </p>
                             </div>
                         </div>
@@ -35,3 +42,4 @@
         </div>
     </div>
 </div>
+@endsection

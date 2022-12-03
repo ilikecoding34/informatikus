@@ -10,7 +10,7 @@
                 @method('PUT')
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Komment</label>
-                    <input type="text" class="form-control" name="body" id="body" value="{{$comment->body}}">
+                    <textarea class="form-control" rows={{str_word_count($comment->body)/12}} name="body" id="body">{{$comment->body}}</textarea>
                 </div>
 
                 <button type="submit" class="btn btn-success">Mentés</button>
