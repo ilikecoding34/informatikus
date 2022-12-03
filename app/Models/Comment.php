@@ -18,7 +18,7 @@ class Comment extends Model
         parent::boot();
 
         self::created(function($comment){
-            Mail::to('fejdav@gmail.com')->send(new NotifyMail($comment));
+            Mail::to('fejdav@gmail.com')->send(new NotifyMail($comment, 'comment'));
         });
     }
 

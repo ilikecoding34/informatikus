@@ -66,7 +66,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        Mail::to('fejdav@gmail.com')->send(new NotifyMail($data));
+        Mail::to('fejdav@gmail.com')->send(new NotifyMail($data, 'register'));
 
         return User::create([
             'name' => $data['name'],
