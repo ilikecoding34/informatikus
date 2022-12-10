@@ -53,6 +53,7 @@ class PublicController extends Controller
         if(url()->current() != url()->previous()){
             $post->increment('view');
         }
+        views($post)->record();
         return view('singlepost', compact('post', 'settings', 'file'));
     }
 

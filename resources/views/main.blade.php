@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <p class="card-text text-left">
-                                                    <small>Megtekintés: {{$item->view}}</small><br>
+                                                    <small>Megtekintés: {{views($item)->unique()->count()}}</small><br>
                                                     <small>Hozzászólások: {{count($item->comments)}}</small><br>
                                                     <small class="text-muted">Szerző:
                                                         @if ($item->user != null)
