@@ -1,0 +1,410 @@
+/**
+ * Central custom styles
+ * Tech blog (main) and shared UI
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ==========================================================================
+   Tech blog – main page
+   ========================================================================== */
+
+.tech-blog-main {
+  --bg-page: #f1f5f9;
+  --card-bg: #ffffff;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 10px 40px -15px rgba(0, 0, 0, 0.15);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-page);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 3rem;
+}
+
+.tech-blog-main a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Topic strip */
+.tech-blog-main .topic-strip {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  padding: 1.25rem 1.5rem;
+  margin: 0 -15px 1.5rem -15px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.tech-blog-main .topic-strip .topic-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+.tech-blog-main .topic-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.tech-blog-main .topic-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 0.2s, transform 0.15s;
+}
+
+.tech-blog-main .topic-pill:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Topic colors for known tech */
+.tech-blog-main .topic-pill[data-topic="flutter"]:hover {
+  background: #02569b;
+  border-color: #02569b;
+}
+
+.tech-blog-main .topic-pill[data-topic="laravel"]:hover {
+  background: #ff2d20;
+  border-color: #ff2d20;
+}
+
+.tech-blog-main .topic-pill[data-topic="javascript"]:hover {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+}
+
+.tech-blog-main .topic-pill[data-topic="css"]:hover {
+  background: #264de4;
+  border-color: #264de4;
+}
+
+.tech-blog-main .topic-pill[data-topic="php"]:hover {
+  background: #777bb4;
+  border-color: #777bb4;
+}
+
+.tech-blog-main .topic-pill[data-topic="sql"]:hover {
+  background: #336791;
+  border-color: #336791;
+}
+
+.tech-blog-main .topic-pill[data-topic="webserver"]:hover {
+  background: #009639;
+  border-color: #009639;
+}
+
+.tech-blog-main .topic-pill[data-topic="vuejs"]:hover {
+  background: #42b883;
+  border-color: #42b883;
+}
+
+/* Post grid */
+.tech-blog-main .posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tech-blog-main .post-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: box-shadow 0.25s, transform 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.tech-blog-main .post-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+.tech-blog-main .post-card-link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 0;
+}
+
+.tech-blog-main .post-card .card-accent {
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  margin-bottom: 1rem;
+}
+
+.tech-blog-main .post-card .card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tech-blog-main .post-card:hover .card-title {
+  color: var(--accent);
+}
+
+.tech-blog-main .post-card .card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.tech-blog-main .post-card .card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.tech-blog-main .card-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.tech-blog-main .post-card .card-meta {
+  padding: 0.75rem 1.25rem;
+  background: #f8fafc;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.tech-blog-main .card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tech-blog-main .post-card .card-actions {
+  border-top: none;
+  background: #f1f5f9;
+  gap: 0.5rem;
+}
+
+.tech-blog-main .post-card .card-actions .btn {
+  margin: 0;
+}
+
+.tech-blog-main .empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.tech-blog-main .pagination-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.tech-blog-main .pagination-wrap nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* ==========================================================================
+   Main page – three-column layout
+   ========================================================================== */
+
+.tech-blog-main .main-three-cols {
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.tech-blog-main .main-three-cols.main-no-left {
+  grid-template-columns: 1fr 260px;
+}
+
+.tech-blog-main .main-three-cols.main-no-right {
+  grid-template-columns: 260px 1fr;
+}
+
+.tech-blog-main .main-three-cols.main-no-left.main-no-right {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 992px) {
+  .tech-blog-main .main-three-cols {
+    grid-template-columns: 1fr;
+  }
+  .tech-blog-main .main-three-cols.main-no-left,
+  .tech-blog-main .main-three-cols.main-no-right {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tech-blog-main .main-col {
+  min-width: 0;
+}
+
+.tech-blog-main .main-sidebar-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.tech-blog-main .main-sidebar-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.tech-blog-main .main-sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tech-blog-main .main-sidebar-list li {
+  margin-bottom: 0.5rem;
+}
+
+.tech-blog-main .main-sidebar-list li:last-child {
+  margin-bottom: 0;
+}
+
+.tech-blog-main .main-sidebar-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  transition: background 0.15s, color 0.15s;
+}
+
+.tech-blog-main .main-sidebar-link:hover {
+  background: #f1f5f9;
+  color: var(--accent);
+}
+
+.tech-blog-main .main-sidebar-link-title {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tech-blog-main .main-sidebar-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Form / post create & edit */
+.tech-blog-main .form-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-blog-main .form-card .card-accent {
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  margin: -1.5rem -1.5rem 1.25rem -1.5rem;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.tech-blog-main .form-card .form-label,
+.tech-blog-main .form-card label {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+
+.tech-blog-main .form-card .form-control {
+  border-radius: var(--radius-sm);
+  border-color: var(--border);
+}
+
+.tech-blog-main .form-card .form-control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.tech-blog-main .form-card .form-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Post show (admin view) */
+.tech-blog-main .post-show-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-blog-main .post-show-card .card-accent {
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  margin: -1.5rem -1.5rem 1.25rem -1.5rem;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.tech-blog-main .post-show-card .post-body {
+  color: var(--text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}

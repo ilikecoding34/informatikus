@@ -11,10 +11,14 @@ class Post extends Model implements Viewable
 {
     use HasFactory, InteractsWithViews;
 
-    protected $fillable = ['user_id', 'category_id', 'title', 'link', 'body', 'view'];
+    protected $fillable = ['user_id', 'updated_by_id', 'category_id', 'title', 'link', 'body', 'is_active'];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
 
     public function tags(){
-        return $this->belongsToMany(Tag::class, 'posts_tags')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'post_tag')->withTimestamps();
     }
 
     public function file()
@@ -28,5 +32,14 @@ class Post extends Model implements Viewable
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function updatedBy(){
+        return $this->belongsTo(User::class, 'updated_by_id');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
     }
 }

@@ -11,14 +11,23 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['body', 'post_id', 'user_id'];
+    protected $fillable = ['body', 'post_id', 'user_id', 'parent_id', 'hidden_at'];
+
+    protected $casts = [
+        'hidden_at' => 'datetime',
+    ];
+
+    public function scopeVisible($query)
+    {
+        return $query->whereNull('hidden_at');
+    }
 
     public static function boot()
     {
         parent::boot();
 
         self::created(function($comment){
-            Mail::to('fejdav@gmail.com')->send(new NotifyMail($comment, 'comment'));
+         //   Mail::to('fejdav@gmail.com')->send(new NotifyMail($comment, 'comment'));
         });
     }
 
@@ -35,6 +44,16 @@ class Comment extends Model
         public function post()
         {
             return $this->belongsTo(Post::class, 'post_id');
+        }
+
+        public function parent()
+        {
+            return $this->belongsTo(self::class, 'parent_id');
+        }
+
+        public function replies()
+        {
+            return $this->hasMany(self::class, 'parent_id');
         }
 
 }

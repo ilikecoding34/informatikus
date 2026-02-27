@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->get();
+        $posts = Post::with(['user', 'updatedBy', 'tags'])->withCount('comments')->orderBy('id', 'desc')->get();
         return view('posts.index', compact('posts'));
     }
 
@@ -53,6 +53,7 @@ class PostController extends Controller
 
         $post = new Post;
         $post->user_id = $user_id;
+        $post->updated_by_id = $user_id;
         $post->title = $request->title;
         $post->link = $request->link;
         $post->body = $request->content;
@@ -104,14 +105,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if (Auth::user()->id == $post->user_id){
-            $post = Post::find($post->id);
-            $tags = Tag::all();
-            $categories = Category::all();
-            return view('posts.edit', compact('post', 'tags', 'categories'));
-        }else{
+        if (!Auth::user()->canEditPost($post)) {
             return redirect(route('posts.index'));
         }
+        $post = Post::find($post->id);
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('posts.edit', compact('post', 'tags', 'categories'));
     }
 
     /**
@@ -123,17 +123,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if (Auth::user()->id == $post->user_id){
-            $post = Post::find($post->id);
-            $post->user_id = Auth::user()->id;
-            $post->title = $request->title;
-            $post->body = $request->content;
-            $post->category_id = $request->category;
-            $post->save();
+        if (!Auth::user()->canEditPost($post)) {
+            return redirect(route('posts.index'));
+        }
+        $post = Post::find($post->id);
+        $post->updated_by_id = Auth::user()->id;
+        $post->title = $request->title;
+        $post->link = $request->link ?? $post->link;
+        $post->body = $request->content;
+        $post->category_id = $request->category;
+        $post->save();
 
-            if(isset($request->tags)){
-                $post->tags()->sync($request->tags);
-            }
+        if (isset($request->tags)) {
+            $post->tags()->sync($request->tags);
         }
 
         return redirect(route('posts.index'));
@@ -147,10 +149,28 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (Auth::user()->id == $post->user_id){
-            $post->delete();
+        if (!Auth::user()->canEditPost($post)) {
+            return redirect(route('posts.index'));
         }
+        $post->delete();
         return redirect(route('posts.index'));
     }
 
+    public function deactivate(Post $post)
+    {
+        if (!Auth::user()->canEditPost($post)) {
+            return redirect(route('posts.index'));
+        }
+        $post->update(['is_active' => false]);
+        return redirect(route('posts.index'))->with('message', 'Bejegyzés deaktiválva.');
+    }
+
+    public function activate(Post $post)
+    {
+        if (!Auth::user()->canEditPost($post)) {
+            return redirect(route('posts.index'));
+        }
+        $post->update(['is_active' => true]);
+        return redirect(route('posts.index'))->with('message', 'Bejegyzés aktiválva.');
+    }
 }

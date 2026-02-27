@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Post;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'secret_code',
+        'role_id',
     ];
 
     /**
@@ -56,5 +58,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Whether this user may edit the post (owner, or admin/editor role).
+     */
+    public function canEditPost(Post $post): bool
+    {
+        if ($this->id === $post->user_id) {
+            return true;
+        }
+        $roleName = $this->role?->name;
+        return in_array($roleName, ['admin', 'editor'], true);
     }
 }

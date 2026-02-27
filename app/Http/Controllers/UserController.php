@@ -20,9 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $roles = Role::all();
-        return view('users.index', compact('users', 'roles'));
+        $users = User::with('role')->orderBy('name')->get();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -66,7 +65,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id)->with('role')->first();
+        $user = User::with('role')->findOrFail($id);
         $roles = Role::all();
         return view('users.edit', compact('user', 'roles'));
     }

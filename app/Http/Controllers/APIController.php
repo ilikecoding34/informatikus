@@ -102,7 +102,7 @@ class APIController extends Controller
 
     public function getpost($id){
         $post = Post::where('id', $id)->with(['user','comments', 'tags', 'file'])->first();
-        $post->increment('view');
+        views($post)->record();
         return response($post, 200);
     }
 

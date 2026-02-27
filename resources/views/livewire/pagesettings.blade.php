@@ -1,56 +1,49 @@
 <div class="container">
-    <div class="row justify-content-center mb-2">
-        <div class="col-md-3">
-            <div class="justify-content-center">
-                <label>Select Number of columns</label>
-                <select class="form-control" wire:click="changeCount($event.target.value)">
-                    @foreach($column_count as $key => $count)
-                        <option value="{{ $key }}">{{ $count }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
     <div class="row justify-content-center">
-        <label>Select Number of columns</label>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Főoldal elrendezése</h5>
+                </div>
+                <div class="card-body">
+                    @if (session()->has('message'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+
+                    <p class="text-muted mb-4">
+                        Válaszd ki, mi jelenjen meg a bal és a jobb oldali oszlopban. A középső oszlop (összes bejegyzés) mindig látható. Mindkét oldalról választhatsz egyet az alábbi lehetőségek közül; ha „Nincs” van kiválasztva, az oszlop rejtve marad.
+                    </p>
+
+                    <form wire:submit="save">
+                        <div class="form-group mb-3">
+                            <label for="left_sidebar">Bal oldali oszlop</label>
+                            <select id="left_sidebar" class="form-control" wire:model.live="left_sidebar">
+                                @foreach ($sidebarOptions as $value => $label)
+                                    @if ($value === '' || $value !== $right_sidebar)
+                                        <option value="{{ $value }}">{{ $label }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="right_sidebar">Jobb oldali oszlop</label>
+                            <select id="right_sidebar" class="form-control" wire:model.live="right_sidebar">
+                                @foreach ($sidebarOptions as $value => $label)
+                                    @if ($value === '' || $value !== $left_sidebar)
+                                        <option value="{{ $value }}">{{ $label }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('right_sidebar')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary">Mentés</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row justify-content-center">
-        @if ($column_count_id > 0)
-        <div class="col-md-3">
-            <div>
-                <select 
-                class="form-control" wire:click="changeType(1,$event.target.value)" wire:model="col1">
-                    @foreach($selectables[0] as $key => $type)
-                        <option value="{{ $key }}">{{ $type }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        @endif
-        @if ($column_count_id > 1)
-        <div class="col-md-3">
-            <div>
-                <select 
-                class="form-control" wire:click="changeType(2,$event.target.value)" wire:model="col2">
-                    @foreach($selectables[1] as $key => $type)
-                        <option value="{{ $key }}">{{ $type }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        @endif
-        @if ($column_count_id > 2)
-        <div class="col-md-3">
-            <div>
-                <select 
-                class="form-control" wire:click="changeType(3,$event.target.value)" wire:model="col3">
-                    @foreach($selectables[2] as $key => $type)
-                        <option value="{{ $key }}">{{ $type }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        @endif
-    </div>
-    <button class="btn btn-primary" wire:click="savesettings">Save</button>
 </div>

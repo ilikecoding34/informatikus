@@ -9,7 +9,9 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function posts(){
-        return $this->belongsToMany(Post::class, 'posts_tags')->withTimestamps();
+        return $this->belongsToMany(Post::class, 'post_tag')->withTimestamps();
     }
 }

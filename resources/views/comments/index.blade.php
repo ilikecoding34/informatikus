@@ -28,7 +28,7 @@
                             </div>
                             <div class="col">
                                 <p class="card-text text-right">
-                                    <small class="text-muted"><timeupdate inputtime="{{$item->updated_at}}"></timeupdate></small>
+                                    <small class="text-muted">@include('partials.time-ago', ['datetime' => $item->updated_at])</small>
                                 </p>
                             </div>
                         </div>
